@@ -72,40 +72,37 @@ fs.readdir("./commands/Scrims", (err, files) => {
     })
 })
 client.on('message', message => {
-  if(!message.member) return;
-  if(message.author.bot) return;
-  if(!message.content.startsWith(client.prefix)) return;
-     let command = message.content.split(" ")[0].slice(client.config.prefix.length);
-     let args = message.content.split(" ").slice(1);
-     let perms = client.elevation(message)
-     let cmd
-     if (client.commands.has(command)) {
-         cmd = client.commands.get(command);
-     }
-     else if (client.aliases.has(command)) {
-         cmd = client.commands.get(client.aliases.get(command))
-     }
-     if (cmd) {
-         if (perms < cmd.conf.permLevel) {
-             message.reply("You dont have access for this command").then(m => {
-                 m.delete(7000);
-             });
-             return;
-         }
-         else if (cmd.conf.enabled === true) {
+    if (!message.member) return;
+    if (message.author.bot) return;
+    if (!message.content.startsWith(client.prefix)) return;
+    let command = message.content.split(" ")[0].slice(client.config.prefix.length);
+    let args = message.content.split(" ").slice(1);
+    let perms = client.elevation(message)
+    let cmd
+    if (client.commands.has(command)) {
+        cmd = client.commands.get(command);
+    } else if (client.aliases.has(command)) {
+        cmd = client.commands.get(client.aliases.get(command))
+    }
+    if (cmd) {
+        if (perms < cmd.conf.permLevel) {
+            message.reply("You dont have access for this command").then(m => {
+                m.delete(7000);
+            });
+            return;
+        } else if (cmd.conf.enabled === true) {
             cmd.run(client, message, args, perms)
             client.logger.log(`${message.author.username} used **${client.config.prefix + command}** command`);
-         }
-         else {
-             client.logger.log(`${message.author.username} tried to use **${client.config.prefix + command}** but its disabled!`);
-             const embed = new Discord.RichEmbed() 
+        } else {
+            client.logger.log(`${message.author.username} tried to use **${client.config.prefix + command}** but its disabled!`);
+            const embed = new Discord.RichEmbed()
                 .setColor(client.color)
                 .setTitle(`Command Disabled`)
                 .setDescription(`**${command}** is disabled for now. Contact the developer for any questions`)
                 .setFooter(client.footer);
             message.channel.send(embed);
-         }
-     }
+        }
+    }
 })
 
 
@@ -120,7 +117,7 @@ client.on('guildMemberAdd', member => {
     let humans = member.guild.members.filter(m => !m.user.bot).size
     member.guild.channels.get(client.config.serverStatsChannels.membercountchannelID).setName(`Member Count: ${humans}`);
 })
-client.reload = function ( command ) {
+client.reload = function (command) {
     return new Promise((resolve, reject) => {
         try {
             delete require.cache[require.resolve(`./commands/${command}`)]
@@ -144,11 +141,11 @@ client.reload = function ( command ) {
 client.elevation = function (message) {
     let permlvl = 0
     let moderator_role = message.guild.roles.find("name", "Moderator")
-    if(moderator_role && message.member.roles.has(moderator_role.id)) permlvl = 2
+    if (moderator_role && message.member.roles.has(moderator_role.id)) permlvl = 2
     let admin_role = message.guild.roles.find("name", "Administrator")
-    if(admin_role && message.member.roles.has(admin_role.id)) permlvl = 3
-    if(message.author.id === client.config.ownerID) permlvl = 4
+    if (admin_role && message.member.roles.has(admin_role.id)) permlvl = 3
+    if (message.author.id === client.config.ownerID) permlvl = 4
     return permlvl;
 }
-  
+
 client.login(client.config.botToken);
