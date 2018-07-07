@@ -23,7 +23,7 @@ Welcome to GreekArenaBot! GreekArenaBot was designed to bring more activity to y
   - *Unmute*: Unmute a member from the server
 - *Scrims Commands*
   - *Add Team*: Adds a team to scrim list
-  - *Delete Team*: Deletes a team from scrim list
+  - *Delete Team*: Deletes all teams from scrim list
   - *Show Teams*: Show the teams from scrim list
   
   
