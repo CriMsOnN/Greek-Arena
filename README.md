@@ -27,3 +27,13 @@ This bot created to make our lifes easier
   
   
 
+#### TODO LIST
+- [x] Administrator Commands
+- [x] Moderator Commands
+- [x] Scrim Commands
+- [x] Second bot to watch everything on the server
+- [x] Logs for everything that happens
+- [ ] Start scrims with command
+- [ ] Stop scrims with command
+- [ ] Delete specific team from list
+- [ ] Auto update
