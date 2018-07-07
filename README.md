@@ -12,4 +12,18 @@ This bot created to make our lifes easier
 
 - *Administrator Commands*
   - *Reload*: Reloads every command without restarting the bot
-  - *ShutDown*: Shutdowns the bot
+  - *Shutdown*: Shutdowns the bot
+- *Moderator Commands*
+  - *Ban*: Bans a member from the server
+  - *Enable*: Enables a command
+  - *Disable*: Disables a command
+  - *Kick*: Kicks a member from the server
+  - *Mute*: Mutes a member from the server
+  - *Unmute*: Unmute a member from the server
+- *Scrims Commands*
+  - *Add Team*: Adds a team to scrim list
+  - *Delete Team*: Deletes a team from scrim list
+  - *Show Teams*: Show the teams from scrim list
+  
+  
+
