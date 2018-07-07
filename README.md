@@ -7,8 +7,7 @@
   </p>
     
     
-A small bot with focus on moderation, scrims, watching everything on channel but an emphasis on fun.
-This bot created to make our lifes easier
+Welcome to GreekArenaBot! GreekArenaBot was designed to bring more activity to your server, while keeping control over it all with the second bot. The second bot stays on your server and watching everything. Every move. Every ban. Every kick. Every message. 
 
 > "When everything goes wrong - that's when adventure starts."
 
