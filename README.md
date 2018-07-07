@@ -3,7 +3,7 @@
 </p>
  <br />
  <p>
-  <img src="https://discordapp.com/api/guilds/362993221229346818/embed.png" alt="Discord Server"/>
+    <img src="https://discordapp.com/api/guilds/330026907598848011/embed.png" alt="Discord Server"/>
   </p>
     
     
