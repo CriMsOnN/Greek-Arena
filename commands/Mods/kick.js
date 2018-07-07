@@ -3,35 +3,37 @@ const Discord = require('discord.js');
 exports.run = async ( client, message, args) => {
     let member = message.mentions.members.first() || null;
     let user = message.mentions.users.first() || null;
-
-    if (member == null) {
+    let reason = args.slice(1).join(' ');
+    if(reason.length < 1) {
         const embed = new Discord.RichEmbed()
             .setColor(client.color)
-            .setTitle(`${message.guild.name} - Kick`)
-            .setDescription(`Mention a valid member in ${message.guild.name}`)
+            .setTitle(`${message.guild.name} - Kick Error`)
+            .setDescription(`You must supply a reason for the kick`)
+            .setFooter(client.footer)
         message.channel.send(embed);
         return;
     }
-
-    let kicker = message.author.username;
-
-    let reason;
-    if(args[2] != null) {
-        reason = args[2].join(" ");
+    else if (message.mentions.users.size < 1) {
+        const embed = new Discord.RichEmbed()
+            .setColor(client.color)
+            .setTitle(`${messasge.guild.name} - Kick Error`)
+            .setDescription(`You must mention someone to kick him`)
+        message.channel.send(embed);
+        return;
     }
-    else {
-        reason = `No reason provided by ${kicker}`;
-    }
-
-    if(!user.bot) {
+    else if(!user.bot) {
         message.guild.member(member).kick();
         const embed = new Discord.RichEmbed()
             .setColor(client.color)
-            .setTitle(`${message.guild.name} - Kick`)
-            .setDescription(`Kicked by: **${kicker}** \nReason: **${reason}**`)
+            .setAuthor("PUBG EXP. Security", client.embedimage)
+            .setTitle(`${message.guild.name} - Kick Reminder`)
+            .setThumbnail(client.embedimage)
+            .addField('Action:', 'KICK', true)
+            .addField('User:', `${user.username}#${user.discriminator}`, true)
+            .addField('Staff:', `${message.author.username}#${message.author.discriminator}`, true)
+            .addField('Reason:', reason, true)
             .setFooter(client.footer);
-        message.channel.send(embed);
-
+        client.channels.get(client.modlogs).send({embed});
     }
 }
 

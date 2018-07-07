@@ -14,7 +14,7 @@ exports.run = (client, message, args) => {
         const embed = new Discord.RichEmbed()
             .setColor(client.color)
             .setTitle(`${message.guild.name} - Scrims Register`)
-            .setDescription(`his team is already registered to scrims. Type !delete_team name to leave from scrims`)
+            .setDescription(`This team is already registered to scrims. Type !delete_team name to leave from scrims`)
             .setFooter(client.footer);
         message.channel.send(embed);
         return false;
@@ -43,13 +43,26 @@ exports.run = (client, message, args) => {
 
         if (client.db.has(`scrimTeam`)) client.db.push(`scrimTeam`, data);
         else client.db.set(`scrimTeam`, [data])
-        const embed = new Discord.RichEmbed()
+        const embed1 = new Discord.RichEmbed()
             .setColor(client.color)
             .setTitle(`${message.guild.name} - Scrims Register`)
             .setDescription(`Team **${args[0]}** successfully registered to scrims`)
             .setFooter(client.footer);
-        message.channel.send(embed);
+
+        let embed2 = new Discord.RichEmbed()
+            .setColor(client.color)
+            .setAuthor("PUBG EXP. Security", client.embedimage)
+            .setTitle(`${message.guild.name} - Team Added`)
+            .setThumbnail(client.embedimage)
+            .addField('Action:', 'add_team', true)
+            .addField('Team Name:', `${args[0]}`, true)
+            .setFooter(client.footer);
+        
+        message.channel.send(embed1).then(msg => {
+            client.channels.get(client.modlogs).send(embed2);
+        })
     }
+
 }
 
 exports.conf = {
