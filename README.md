@@ -7,7 +7,7 @@
   </p>
     
     
-Welcome to GreekArenaBot! GreekArenaBot was designed to bring more activity to your server, while keeping control over it all with the second bot. The second bot stays on your server and watching everything. Every move. Every ban. Every kick. Every message. 
+Welcome to GreekArenaBot! GreekArenaBot was designed to bring more activity to your server, while keeping control over it all with the second bot. The second bot stays on your server and watching everything. Every move, every ban, every kick, every message. 
 
 > "When everything goes wrong - that's when adventure starts."
 
@@ -38,3 +38,9 @@ Welcome to GreekArenaBot! GreekArenaBot was designed to bring more activity to y
 - [ ] Stop scrims with command
 - [ ] Delete specific team from list
 - [ ] Auto update
+
+
+### Special Thanks
+- Hydrabolt for the DiscordJS library
+- TrueXPixels for the second bot
+- All the creators of the node packages used in this bot
