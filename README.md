@@ -10,4 +10,6 @@ This bot created to make our lifes easier
 
 > "When everything goes wrong - that's when adventure starts."
 
-1. *Administrator Commands*
+- *Administrator Commands*
+  - *Reload*: Reloads every command without restarting the bot
+  - *ShutDown*: Shutdowns the bot
