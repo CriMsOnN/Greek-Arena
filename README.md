@@ -7,7 +7,7 @@
   </p>
     
     
-Welcome to GreekArenaBot! GreekArenaBot was designed to bring more activity to your server, while keeping control over it all with the second bot. The second bot stays on your server and watching everything. Every move, every ban, every kick, every message. 
+Welcome to GreekArenaBot! GreekArenaBot was designed to bring more activity to your server, while keeping control over it all with the second bot. The second bot stays on your server and watches everything. Every move, every ban, every kick, every message. 
 
 > "When everything goes wrong - that's when adventure starts."
 
