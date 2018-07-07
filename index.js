@@ -108,44 +108,6 @@ client.on('message', message => {
 
 
 client.on('guildMemberRemove', async member => {
-    
-    let audit = await client.functions.fetchLastAudit(member.guild, 'MEMBER_KICK');
-    if (!audit) return;
-
-    if (member.id !== audit.target.id) return;
-    if (audit.action !== 'MEMBER_KICK') return;
-
-    let target = audit.target;
-    let exec = audit.executor;
-
-    if (client.ignoreBots && target.bot) return;
-
-    let data = {
-        target: {
-            id: target.id,
-            tag: `@${target.username}#${target.discriminator}`
-        },
-        executor: {
-            id: exec.id,
-            tag: `@${exec.username}#${exec.discriminator}`
-        },
-        timestamp: Date.now(),
-        type: 'guildMemberKick'
-    }
-
-    if (client.db.has(`userRemovals_${member.guild.id}`)) client.db.push(`userRemovals_${member.guild.id}`, data);
-    else client.db.set(`userRemovals_${member.guild.id}`, [data]);
-
-    if (client.db.has(`userRemovals_${member.guild.id}_${exec.id}`)) client.db.push(`userRemovals_${member.guild.id}_${exec.id}`, data);
-    else client.db.set(`userRemovals_${member.guild.id}_${exec.id}`, [data]);
-
-    const embed = new Discord.RichEmbed()
-        .setColor(client.color)
-        .setTitle(`${member.guild.name} - Recent Kick`)
-        .setDescription(`**${member.user.username}** *kicked* write !kicks to see who kicked him`)
-        .setFooter(client.footer)
-    member.guild.channels.find("name", "mod-logs").send(embed);
-
     member.guild.channels.get(client.config.serverStatsChannels.totaluserschannelID).setName(`Total Users: ${member.guild.memberCount}`)
     let humans = member.guild.members.filter(m => !m.user.bot).size
     member.guild.channels.get(client.config.serverStatsChannels.membercountchannelID).setName(`Member Count: ${humans}`)
