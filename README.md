@@ -1,4 +1,4 @@
-<p align="center"><h1>Greek-Arena</h1></p>
+<h1 align="center">Greek-Arena</h1>
 
 <p align="center">
  <img width="200" height="200" src="https://cdn.discordapp.com/icons/362993221229346818/6531bdcf7b28b47c54d7d3770849a906.png"
