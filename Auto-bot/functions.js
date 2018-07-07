@@ -67,8 +67,8 @@ module.exports = {
     else {
       
       // Add Muted Role
-      let muted = guild.roles.find(r => r.name === 'Muted');
-      if (muted) guild.members.get(id).roles.add(muted);
+      let muted = member.guild.roles.find("name", "Muted");
+      if (muted) member.addRole('Muted');
       
       
       // Post Announcement
@@ -81,7 +81,7 @@ module.exports = {
         if (reached === 'Minute') for (var i in pingsPM) msg += `\`${module.exports.parseTime(pingsPM[i].timestamp)}\` | **${pingsPM[i].user.tag}** *pinged* **${pingsPM[i].target}**\n` 
         else for (var i in pingsPH) msg += `\`${module.exports.parseTime(pingsPH[i].timestamp)}\` | **${pingsPH[i].user.tag}** *pinged* **${pingsPH[i].target}**\n`;
       
-        const embed = new Discord.MessageEmbed()
+        const embed = new Discord.RichEmbed()
           .setColor(client.color)
           .setTitle(`Ping Limit Reached! - ${reached}`)
           .addField('Recent Actions', msg)
@@ -159,7 +159,7 @@ module.exports = {
       else for (var i in dataHour) msg += `\`${module.exports.parseTime(dataHour[i].timestamp)}\` | **${dataHour[i].executor.tag}** ${type} **${dataHour[i].target.tag}**\n`;
       
       // Form Embed
-      const embed = new Discord.MessageEmbed()
+      const embed = new Discord.RichEmbed()
         .setColor(client.color)
         .setTitle(`Limit Reached! - ${reached}`)
         .addField('Recent Actions', msg)

@@ -9,7 +9,7 @@ client.color = 0xDFE0D2;
 client.footer = 'Created by Cr1MsON | PUBG EXP. Greece';
 client.ignoreBots = true;
 client.guildPings = new Map();
-client.functions = require('./functions.js');
+client.tools = require('./functions.js');
 
 const Enmap = require('enmap');
 const EnmapSQLite = require('enmap-sqlite');
@@ -25,7 +25,7 @@ client.db.defer.then(() => {
 })
 
 client.on('ready', async () => {
-    client.setActivity('the server', {type: 'WATCHING'});
+    client.user.setActivity('the server', {type: 'WATCHING'});
 });
 
 client.on('message', message => {
@@ -33,6 +33,9 @@ client.on('message', message => {
     if (!message.member) return;
     // Return Statements
     if (message.member.roles.find(r => r.name === 'Muted')) return;
+    if(message.content.startsWith("ping")) {
+        message.reply(client.ping)
+    }
 
     // Collect Pings
     let user = {
@@ -80,7 +83,7 @@ client.on('message', message => {
 
     if (pinged) {
         client.guildPings.set(message.guild.id, pings);
-        client.functions.checkPings(client, message.guild, message.author.id);
+        client.tools.checkPings(client, message.guild, message.author.id);
     }
 
     if (message.author.bot) return;
@@ -103,7 +106,7 @@ client.on('message', message => {
     // Run Commands
     try {
         let commandFile = require(`./commands/${cmd}.js`);
-        commandFile.run(client, message, args, client.functions);
+        commandFile.run(client, message, args, client.tools);
     } catch (e) {
         console.log(e.stack);
     }
@@ -118,7 +121,7 @@ client.on('guildBanAdd', async guild => {
     if (!guild.me.hasPermission('ADMINISTRATOR')) return;
 
     // Fetch audit log
-    let audit = await client.functions.fetchLastAudit(guild, 'MEMBER_BAN_ADD');
+    let audit = await client.tools.fetchLastAudit(guild, 'MEMBER_BAN_ADD');
     if (!audit) return;
 
     let target = audit.target;
@@ -148,13 +151,12 @@ client.on('guildBanAdd', async guild => {
     else client.db.set(`userRemovals_${guild.id}_${exec.id}`, [data]);
 
     // Check Action Count
-    client.functions.check(client, guild, exec.id, 'userRemovals');
+    client.tools.check(client, guild, exec.id, 'userRemovals');
 
 });
 
 client.on('guildMemberAdd', async member => {
-    if (member.user.bot) member.roles.add(member.guild.roles.find(r => r.name === 'Bot'));
-    else member.roles.add(member.guild.roles.find(r => r.name === 'User'));
+   
 })
 
 client.on('guildMemberRemove', async member => {
@@ -162,7 +164,7 @@ client.on('guildMemberRemove', async member => {
     if (!member.guild.me.hasPermission('ADMINISTRATOR')) return;
 
     // Fetch Audit Log
-    let audit = await client.functions.fetchLastAudit(member.guild, 'MEMBER_KICK');
+    let audit = await client.tools.fetchLastAudit(member.guild, 'MEMBER_KICK');
     if (!audit) return;
 
     // Return if NOT kicked
@@ -196,7 +198,7 @@ client.on('guildMemberRemove', async member => {
     else client.db.set(`userRemovals_${member.guild.id}_${exec.id}`, [data]);
 
     // Check Action Count
-    client.functions.check(client, member.guild, exec.id, 'userRemovals');
+    client.tools.check(client, member.guild, exec.id, 'userRemovals');
 
 });
 
@@ -205,7 +207,7 @@ client.on('channelDelete', async channel => {
     if (!channel.guild.me.hasPermission('ADMINISTRATOR')) return;
 
     // Fetch Audit Log
-    let audit = await client.functions.fetchLastAudit(channel.guild, 'CHANNEL_DELETE');
+    let audit = await client.tools.fetchLastAudit(channel.guild, 'CHANNEL_DELETE');
     if (!audit || audit.action !== 'CHANNEL_DELETE') return;
 
     let exec = audit.executor;
@@ -227,7 +229,7 @@ client.on('channelDelete', async channel => {
     else client.db.set(`channelDeletions_${channel.guild.id}`, [data]);
 
     // Check Action Count
-    client.functions.check(client, channel.guild, exec.id, 'channelDeletions');
+    client.tools.check(client, channel.guild, exec.id, 'channelDeletions');
 
 })
 
@@ -236,7 +238,7 @@ client.on('roleDelete', async role => {
     if (!role.guild.me.hasPermission('ADMINISTRATOR')) return;
 
     // Fetch Audit Log
-    let audit = await client.functions.fetchLastAudit(role.guild, 'ROLE_DELETE');
+    let audit = await client.tools.fetchLastAudit(role.guild, 'ROLE_DELETE');
     if (!audit || audit.action !== 'ROLE_DELETE') return;
 
     let exec = audit.executor;
@@ -258,6 +260,6 @@ client.on('roleDelete', async role => {
     else client.db.set(`roleDeletions_${role.guild.id}`, [data]);
 
     // Check Action Count
-    client.functions.check(client, role.guild, exec.id, 'roleDeletions');
+    client.tools.check(client, role.guild, exec.id, 'roleDeletions');
 
 })

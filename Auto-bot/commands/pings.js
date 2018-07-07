@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 
 exports.run = async(client, message, args, tools) => {
 
-  const embed = new Discord.MessageEmbed()
+  const embed = new Discord.RichEmbed()
     .setColor(client.color)
     .setTitle(`${message.guild.name} - Recent Pings`);
   

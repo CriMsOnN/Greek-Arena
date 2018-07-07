@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 exports.run = async(client, message, args, tools) => {
 
   // Create Embed
-  const embed = new Discord.MessageEmbed()
+  const embed = new Discord.RichEmbed()
     .setTitle(`${message.guild.name} - Action Limits`)
     .setColor(client.color)
     .setFooter(client.footer);
