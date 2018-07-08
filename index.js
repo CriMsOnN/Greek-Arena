@@ -34,6 +34,7 @@ client.on('ready', async () => {
         status: 'dnd'
     });
     client.logger.log(`** Bot is up and running **`);
+    client.user.setUsername('GreekArenaBot');
 });
 
 fs.readdir("./commands/Admin", (err, files) => {
