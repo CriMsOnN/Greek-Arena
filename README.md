@@ -42,5 +42,4 @@ Welcome to GreekArenaBot! GreekArenaBot was designed to bring more activity to y
 
 ### Special Thanks
 - Hydrabolt for the DiscordJS library
-- TrueXPixels for the second bot
 - All the creators of the node packages used in this bot
