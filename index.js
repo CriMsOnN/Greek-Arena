@@ -118,11 +118,11 @@ client.on('guildMemberAdd', member => {
     let humans = member.guild.members.filter(m => !m.user.bot).size
     member.guild.channels.get(client.config.serverStatsChannels.membercountchannelID).setName(`Member Count: ${humans}`);
 })
-client.reload = function (command) {
+client.reload = function (directory, command) {
     return new Promise((resolve, reject) => {
         try {
-            delete require.cache[require.resolve(`./commands/${command}`)]
-            let cmd = require(`./commands/${command}`)
+            delete require.cache[require.resolve(`./commands/${directory}/${command}`)]
+            let cmd = require(`./commands/${directory}/${command}`)
             client.commands.delete(command);
             client.aliases.forEach((cmd, alias) => {
                 if (cmd === command) client.aliases.delete(alias)

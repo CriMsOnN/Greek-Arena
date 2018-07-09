@@ -2,10 +2,10 @@ const Discord = require('discord.js');
 
 exports.run = async (client, message, args) => {
     let command;
-    if (client.commands.has(args[0])) {
-        command = args[0];
-    } else if (client.aliases.has(args[0])) {
-        command = client.aliases.get(args[0])
+    if (client.commands.has(args[1])) {
+        command = args[1];
+    } else if (client.aliases.has(args[1])) {
+        command = client.aliases.get(args[1])
     }
     const embed = new Discord.RichEmbed()
         .setColor(client.color);
@@ -17,8 +17,8 @@ exports.run = async (client, message, args) => {
         return message.channel.send(embed);
     }
 
-    embed.setFooter(`Successfully reloaded: ${args[0]}`);
-    client.reload(command)
+    embed.setFooter(`Successfully reloaded: ${args[1]}`);
+    client.reload(args[0], command)
 
     message.channel.send(embed);
 }
