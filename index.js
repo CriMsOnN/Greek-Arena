@@ -13,7 +13,7 @@ client.modlogs = client.config.modlogs;
 client.embedimage = client.config.channel_image_url;
 client.color = 0xDFE0D2;
 client.footer = 'Created by Cr1MsOn | PUBG Exp. Greece';
-client.logger = require('./utils/logger.js');
+client.logger = require('./utils/Logger.js');
 client.functions = require('./utils/functions.js');
 
 client.db = new Enmap({
