@@ -4,65 +4,43 @@ const Discord = require('discord.js');
 exports.run = (client, message, args) => {
     const modlog = message.guild.channels.find('name', 'mod-logs');
     let teamExists = client.db.get('scrimTeam');
+    let scrim_details = client.db.get('scrimDetails');
+    let member_name = message.author.username;
+    let member_id = message.author.id;
+    let gameFull = false;
     let checkTeam;
+    if(client.scrims === 'Closed') return message.reply(`Scrims are closed for now!`);
+    if(teamExists && teamExists.length === 2) {
+        gameFull = true;
+        message.reply('Scrims are full!');
+    }
+    if(gameFull == true) {
+        for (var i in teamExists) {
+            i = 0;
+            client.users.get(teamExists[i].team.captain_id).send(`**${scrim_details[i].details.name}** - **${scrim_details[i].details.password}**`);
+            client.scrims = 'Closed';
+            client.db.delete('scrimDetails', true);
+            client.db.delete('scrimTeam', true);
+            
+        }
+        return;
+    }
     for (var i in teamExists) {
         if (teamExists[i].team.team_name === args[0]) {
             checkTeam = 'Exists';
         }
     }
-    if (checkTeam == 'Exists') {
-        const embed = new Discord.RichEmbed()
-            .setColor(client.color)
-            .setTitle(`${message.guild.name} - Scrims Register`)
-            .setDescription(`This team is already registered to scrims. Type !delete_team name to leave from scrims`)
-            .setFooter(client.footer);
-        message.channel.send(embed);
-        return false;
-    }
-    if (args.length == 0 || args.length < 5) {
-        const embed = new Discord.RichEmbed()
-            .setColor(client.color)
-            .setTitle(`${message.guild.name} - Scrims Register`)
-            .setDescription(`Usage of command: !addteam Team_Name Captain player1 player2 player3 player4 player5`)
-            .setFooter(client.footer);
-        message.channel.send(embed);
-        return false;
-    }
-    else {
-        let data = {
-            team: {
-                team_name: args[0],
-                captain: args[1],
-                player1: args[2],
-                player2: args[3],
-                player3: args[4],
-                player4: args[5],
-                player5: args[6]
-            }
+    if(checkTeam == 'Exists') return message.channel.send(`Your team is already registered to scrims`);
+    if(args.length == 0 || args.length < 1) return message.channel.send(`Command usage: !add_team team `);
+    let data = {
+        team: {
+            team_name: args[0],
+            captain: member_name,
+            captain_id: member_id
         }
-
-        if (client.db.has(`scrimTeam`)) client.db.push(`scrimTeam`, data);
-        else client.db.set(`scrimTeam`, [data])
-        const embed1 = new Discord.RichEmbed()
-            .setColor(client.color)
-            .setTitle(`${message.guild.name} - Scrims Register`)
-            .setDescription(`Team **${args[0]}** successfully registered to scrims`)
-            .setFooter(client.footer);
-
-        let embed2 = new Discord.RichEmbed()
-            .setColor(client.color)
-            .setAuthor("PUBG EXP. Security", client.embedimage)
-            .setTitle(`${message.guild.name} - Team Added`)
-            .setThumbnail(client.embedimage)
-            .addField('Action:', 'add_team', true)
-            .addField('Team Name:', `${args[0]}`, true)
-            .setFooter(client.footer);
-        
-        message.channel.send(embed1).then(msg => {
-            client.channels.get(client.modlogs).send(embed2);
-        })
     }
-
+    if (client.db.has(`scrimTeam`)) client.db.push(`scrimTeam`, data);
+    else client.db.set(`scrimTeam`, [data])
 }
 
 exports.conf = {
@@ -73,7 +51,7 @@ exports.conf = {
 }
 
 exports.help = {
-    name: "add_team",
+    name: "add",
     description: "Adds a team to scrims",
-    usage: "add_team"
+    usage: "add"
 }

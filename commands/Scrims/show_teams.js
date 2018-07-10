@@ -16,7 +16,7 @@ exports.run = async (client, message, args) => {
 
 
     teams.forEach(items => {
-        msg += `Team Name: ** ${items.team.team_name} ** | Captain: ${items.team.captain} | Player 1: ${items.team.player1} | Player 2: ${items.team.player2} | Player 3: ${items.team.player3} \n\n`
+        msg += `Team Name: ** ${items.team.team_name} ** | Captain: ${items.team.captain} \n\n`
     });
     embed.setDescription(msg)
         .setFooter(`${teams.length} Teams * ${client.footer}`)

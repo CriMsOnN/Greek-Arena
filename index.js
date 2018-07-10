@@ -11,6 +11,7 @@ client.prefix = client.config.prefix;
 client.ownerID = client.config.ownerID;
 client.modlogs = client.config.modlogs;
 client.embedimage = client.config.channel_image_url;
+client.scrims = 'Closed';
 client.color = 0xDFE0D2;
 client.footer = 'Created by Cr1MsOn | PUBG Exp. Greece';
 client.logger = require('./utils/Logger.js');
@@ -107,13 +108,13 @@ client.on('message', message => {
 })
 
 
-client.on('guildMemberRemove', async member => {
+client.on('guildMemberRemove', async (member) => {
     member.guild.channels.get(client.config.serverStatsChannels.totaluserschannelID).setName(`Total Users: ${member.guild.memberCount}`)
     let humans = member.guild.members.filter(m => !m.user.bot).size
     member.guild.channels.get(client.config.serverStatsChannels.membercountchannelID).setName(`Member Count: ${humans}`)
 })
 
-client.on('guildMemberAdd', member => {
+client.on('guildMemberAdd', (member) => {
     member.guild.channels.get(client.config.serverStatsChannels.totaluserschannelID).setName(`Total Users: ${member.guild.memberCount}`);
     let humans = member.guild.members.filter(m => !m.user.bot).size
     member.guild.channels.get(client.config.serverStatsChannels.membercountchannelID).setName(`Member Count: ${humans}`);
