@@ -11,11 +11,12 @@ client.prefix = client.config.prefix;
 client.ownerID = client.config.ownerID;
 client.modlogs = client.config.modlogs;
 client.embedimage = client.config.channel_image_url;
+client.admin_channel = client.config.admin_channel
 client.scrims = 'Closed';
 client.color = 0xDFE0D2;
 client.footer = 'Created by Cr1MsOn | PUBG Exp. Greece';
 client.logger = require('./utils/Logger.js');
-client.functions = require('./utils/functions.js');
+client.tools = require('./utils/functions.js');
 
 client.db = new Enmap({
     provider: new EnmapSQLite({
@@ -76,6 +77,11 @@ fs.readdir("./commands/Scrims", (err, files) => {
 client.on('message', message => {
     if (!message.member) return;
     if (message.author.bot) return;
+    if(message.channel.name === message.guild.channels.find('name', 'scrims-signup').name) {
+        if(!message.content.startsWith(client.prefix)) {
+            message.delete(1000);
+        }
+    }
     if (!message.content.startsWith(client.prefix)) return;
     let command = message.content.split(" ")[0].slice(client.config.prefix.length);
     let args = message.content.split(" ").slice(1);

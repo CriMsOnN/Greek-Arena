@@ -4,6 +4,9 @@ exports.run = (client, message, args) => {
     const modlog = message.guild.channels.find('name', 'mod-logs');
     const scrims = message.guild.channels.find('name', 'scrims-signup');
     const general = message.guild.channels.find('name', 'general');
+    const admin_channel = message.guild.channels.find('name', 'admin_channel');
+    
+    if(message.channel.name != admin_channel.name) return;
     if(client.scrims === 'Closed') {
         let scrim_details = client.db.get('scrimDetails');
         client.scrims = 'Opened';
