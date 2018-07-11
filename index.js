@@ -29,12 +29,8 @@ client.db.defer.then(() => {
 });
 
 client.on('ready', async () => {
-    client.user.setPresence({
-        activity: {
-            name: `!help | ${client.guilds.size} Servers`
-        },
-        status: 'dnd'
-    });
+    client.user.setActivity('Scrims');
+    client.user.setStatus("online");
     client.logger.log(`** Bot is up and running **`);
     client.user.setUsername('GreekArenaBot');
 });
@@ -75,8 +71,13 @@ fs.readdir("./commands/Scrims", (err, files) => {
     })
 })
 client.on('message', message => {
+    let admin_channel = message.guild.channels.find('name', 'admin_channel');
     if (!message.member) return;
     if (message.author.bot) return;
+    if(client.user.presence.status == 'dnd' && message.channel.name != admin_channel.name && message.content.startsWith(client.prefix)) {
+        message.reply('In order to provide you with a better experience, we periodically perform maintenance on the bot and servers.')
+        return;
+    }
     if(message.channel.name === message.guild.channels.find('name', 'scrims-signup').name) {
         if(!message.content.startsWith(client.prefix)) {
             message.delete(1000);

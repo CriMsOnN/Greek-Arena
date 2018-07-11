@@ -1,9 +1,10 @@
 const Discord = require('discord.js');
 
 
-exports.run = (client, message, args) => {
+exports.run = async (client, message, args) => {
     const modlog = message.guild.channels.find('name', 'mod-logs');
     const signups = message.guild.channels.find('name', 'scrims-signup');
+    const general = message.guild.channels.find('name', 'general');
     let teamExists = client.db.get('scrimTeam') || [];
     let scrim_details = client.db.get('scrimDetails');
     let member_name = message.author.username;
@@ -16,6 +17,12 @@ exports.run = (client, message, args) => {
         return;
      }
     if(client.scrims === 'Closed') return message.reply(`Scrims are closed for now!`);
+    for (var i in teamExists) {
+        if (teamExists[i].team.team_name === args[0]) {
+            checkTeam = 'Exists';
+        }
+    }
+    if(checkTeam == 'Exists') return message.reply(`Your team is already registered to scrims`);
     let data = {
         team: {
             team_name: args[0],
@@ -25,23 +32,16 @@ exports.run = (client, message, args) => {
     }
     if (client.db.has(`scrimTeam`)) client.db.push(`scrimTeam`, data);
     else client.db.set(`scrimTeam`, [data])
-    if(teamExists && teamExists.length === 2) {
+    if(teamExists && teamExists.length === 4) {
         for (var i = 0; i < teamExists.length; i++) {
             client.users.get(teamExists[i].team.captain_id).send(`Game name: **${scrim_details[0].details.name}** Game password: **${scrim_details[0].details.password}**`);
         }
-        message.channel.send('**Scrim signups closed. Game is about to begin!**').then(() => {
-            client.scrims = 'Closed';
-            client.db.delete('scrimDetails', true);
-            client.db.delete('scrimTeam', true);
-        });
+        general.send('**Scrim signups closed. Game is about to begin!**');
+        client.scrims = 'Closed';
+        client.db.delete('scrimDetails', true);
+        client.db.delete('scrimTeam', true);
         return;
     }
-    for (var i in teamExists) {
-        if (teamExists[i].team.team_name === args[0]) {
-            checkTeam = 'Exists';
-        }
-    }
-    if(checkTeam == 'Exists') return message.channel.send(`Your team is already registered to scrims`);
     if(args.length == 0 || args.length < 1) return message.channel.send(`Command usage: !add_team team `);
     message.reply(`${args[0]} successfully registered for scrims!`);
 }
