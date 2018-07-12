@@ -75,7 +75,7 @@ client.on('message', message => {
     if (!message.member) return;
     if (message.author.bot) return;
     if(client.user.presence.status == 'dnd' && message.channel.name != admin_channel.name && message.content.startsWith(client.prefix)) {
-        message.reply('In order to provide you with a better experience, we periodically perform maintenance on the bot and servers.')
+        message.reply('We are performing scheduled maintenance. We should be back online shortly.\nIn oder to provide you with a better experience, we periodically perfom maintenance on the bot and server');
         return;
     }
     if(message.channel.name === message.guild.channels.find('name', 'scrims-signup').name) {
