@@ -6,7 +6,7 @@ exports.run = async ( client, message, args) => {
     let member = message.mentions.members.first() || null;
     let user = message.mentions.users.first() || null;
     if (member == null) return message.channel.send(`You did not specify a user mention or ID!`);
-    let Banner = message.author.username;
+    let banner = message.author.username;
 
     let reason = args.slice(1).join(" ");
     if (args[1] != null) {
@@ -20,8 +20,8 @@ exports.run = async ( client, message, args) => {
         message.guild.member(member).ban(reason);
         const embed2 = new Discord.RichEmbed()
             .setColor(client.color)
-            .setTitle(`${message.guild.name} - Ban`)
-            .setDescription(`**${member}** banned by **${Banner}** with reason **${reason}**`)
+            .setTitle(`${message.guild.name} - LOGS`)
+            .setDescription(`**${member}** banned by **${banner}** with reason **${reason}**`)
             .setFooter(client.footer);
         logs.send(embed2);
     }

@@ -4,17 +4,17 @@ exports.run = async ( client, message, args) => {
     const logs = message.guild.channels.find('name', 'mod-logs');
     let toMute = message.mentions.members.first() || message.guild.members.get(args[0]);
     if(!toMute) return message.channel.send("You did not specify a user mention or ID!");
-    if(toMute.highestRole.position >= message.member.highestRole.position) return message.channel.send("You can not unmute a member that is equal to or higher than yourself!");
+    if(toMute.highestRole.position >= message.member.highestRole.position) return message.reply("You can not unmute a member that is equal to or higher than yourself!");
 
     let mutedRole = message.guild.roles.find(mR => mR.name === "Muted");
 
-    if(!mutedRole || !toMute.roles.has(mutedRole.id)) return message.channel.send("This user is not muted!");
+    if(!mutedRole || !toMute.roles.has(mutedRole.id)) return message.reply("This user is not muted!");
 
     await toMute.removeRole(mutedRole);
 
     
     const embed = new Discord.RichEmbed()
-        .setTitle(`${message.guild.name} - UnMute`)
+        .setTitle(`${message.guild.name} - LOGS`)
         .setColor(client.color)
         .setDescription(`**${toMute}** unmuted by **${message.author.username}**`)
         .setFooter(client.footer);

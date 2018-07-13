@@ -7,7 +7,8 @@ client.config = require('./config.json');
 client.prefix = client.config.prefix;
 client.ownerID = client.config.ownerID;
 client.color = 0xDFE0D2;
-client.footer = 'Created by Cr1MsOn | PUBG EXP. Greece';
+client.footer = 'PUBG EXP. Greece';
+client.otherbot = 'GreekArenaBot';
 client.events = new Discord.Collection();
 
 readdir('./events/', (err, files) => {
@@ -29,6 +30,5 @@ client.on('ready', async () => {
 
 client.on('message', message => {
 })
-
 
 client.login(client.config.botToken)

@@ -2,7 +2,6 @@ const Discord = require('discord.js');
 
 
 exports.run = async (client, message) => {
-    console.log('working here');
     const logs = message.guild.channels.find('name', 'mod-logs');
     const entry = await message.guild.fetchAuditLogs({type: 'MESSAGE_DELETE'}).then(audit => audit.entries.first());
 

@@ -29,13 +29,13 @@ exports.run = async ( client, message, args) => {
         }
     }
 
-    if(toMute.roles.has(mutedRole.id)) return message.channel.send("This user is already muted!");
+    if(toMute.roles.has(mutedRole.id)) return message.reply("This user is already muted!");
 
 
     await toMute.addRole(mutedRole);
 
     const embed = new Discord.RichEmbed()
-        .setTitle(`${message.guild.name} - Mute`)
+        .setTitle(`${message.guild.name} - LOGS`)
         .setColor(client.color)
         .setDescription(`**${toMute}** muted by **${message.author.username}**`)
         .setFooter(client.footer)

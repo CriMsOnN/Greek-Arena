@@ -12,9 +12,10 @@ client.ownerID = client.config.ownerID;
 client.modlogs = client.config.modlogs;
 client.embedimage = client.config.channel_image_url;
 client.admin_channel = client.config.admin_channel
+client.maintenance = false;
 client.scrims = 'Closed';
 client.color = 0xDFE0D2;
-client.footer = 'Created by Cr1MsOn | PUBG Exp. Greece';
+client.footer = 'PUBG Exp. Greece';
 client.logger = require('./utils/Logger.js');
 client.tools = require('./utils/functions.js');
 
@@ -71,10 +72,9 @@ fs.readdir("./commands/Scrims", (err, files) => {
     })
 })
 client.on('message', message => {
-    let admin_channel = message.guild.channels.find('name', 'admin_channel');
     if (!message.member) return;
     if (message.author.bot) return;
-    if(client.user.presence.status == 'dnd' && message.channel.name != admin_channel.name && message.content.startsWith(client.prefix)) {
+    if(client.maintenance === true && message.content.startsWith(client.prefix) && message.channel.name != message.guild.channels.find('name', 'admin_channel').name) {
         message.reply('We are performing scheduled maintenance. We should be back online shortly.\nIn oder to provide you with a better experience, we periodically perfom maintenance on the bot and server');
         return;
     }

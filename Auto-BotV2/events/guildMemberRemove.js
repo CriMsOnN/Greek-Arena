@@ -9,17 +9,21 @@ exports.run = async (client, member) => {
         let audits = audit.entries.first();
         if(audits.target.id === member.id) {
             if(audits.action === 'MEMBER_KICK') {
-                const embed = new Discord.RichEmbed()
-                    .setColor(client.color)
-                    .setTitle(`${guild.name} - LOGS`)
-                if(audits.reason) {
-                    embed.setDescription(`**${audits.target.username}** was kicked by **${audits.executor.username}** with reason **${audits.reason}**`);
+                if(client.otherbot === audits.executor.username) {
+                    return;
+                } else {
+                    const embed = new Discord.RichEmbed()
+                        .setColor(client.color)
+                        .setTitle(`${guild.name} - LOGS`)
+                    if(audits.reason) {
+                        embed.setDescription(`**${audits.target.username}** was kicked by **${audits.executor.username}** with reason **${audits.reason}**`);
+                    }
+                    else {
+                        embed.setDescription(`**${audits.target.username}** was kicked by **${audits.executor.username}** without reason`);
+                    }
+    
+                    logs.send(embed);
                 }
-                else {
-                    embed.setDescription(`**${audits.target.username}** was kicked by **${audits.executor.username}** without reason`);
-                }
-
-                logs.send(embed);
             }
         }
     })
