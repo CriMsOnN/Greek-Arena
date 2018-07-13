@@ -21,6 +21,7 @@
     "minimatch": "^3.0.4",
     "moment": "^2.22.2",
     "moment-format": "^1.2.8",
+    "ms": "^2.1.1",
     "parse-ms": "^2.0.0",
     "string-similarity": "^1.2.0"
   }
