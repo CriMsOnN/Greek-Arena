@@ -13,7 +13,7 @@ yarn-error.log*
 config.json
 
 # Database
-data
+data/
 
 # Runtime data
 pids
