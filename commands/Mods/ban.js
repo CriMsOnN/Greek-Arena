@@ -2,19 +2,11 @@ const Discord = require('discord.js');
 
 
 exports.run = async ( client, message, args) => {
+    const logs = message.guild.channels.find('name', 'mod-logs');;
     let member = message.mentions.members.first() || null;
     let user = message.mentions.users.first() || null;
-
-    if (member == null) {
-        const embed = new Discord.RichEmbed()
-            .setColor(client.color)
-            .setTitle(`${message.guild.name} - Ban`)
-            .setDescription(`Mention a valid member in ${message.guild.name}`)
-        message.channel.send(embed);
-        return;
-    }
-
-    let Banner = message.author.username;
+    if (member == null) return message.channel.send(`You did not specify a user mention or ID!`);
+    let banner = message.author.username;
 
     let reason = args.slice(1).join(" ");
     if (args[1] != null) {
@@ -26,13 +18,12 @@ exports.run = async ( client, message, args) => {
 
     if(!user.bot) {
         message.guild.member(member).ban(reason);
-        const embed = new Discord.RichEmbed()
+        const embed2 = new Discord.RichEmbed()
             .setColor(client.color)
-            .setTitle(`${message.guild.name} - Ban`)
-            .setDescription(`Kicked by: **${Banner}** \nReason: **${reason}**`)
+            .setTitle(`${message.guild.name} - LOGS`)
+            .setDescription(`**${member}** banned by **${banner}** with reason **${reason}**`)
             .setFooter(client.footer);
-        message.channel.send(embed);
-
+        logs.send(embed2);
     }
     
 }

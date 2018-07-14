@@ -12,6 +12,9 @@ yarn-error.log*
 # Config
 config.json
 
+# Database
+data/
+
 # Runtime data
 pids
 *.pid

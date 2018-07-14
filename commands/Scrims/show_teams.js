@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 
 
-exports.run = async(client, message, args) => {
+exports.run = async (client, message, args) => {
     let teams = client.db.get('scrimTeam') || [];
     let msg = '';
     const embed = new Discord.RichEmbed()
@@ -14,9 +14,9 @@ exports.run = async(client, message, args) => {
         return message.channel.send(embed);
     }
 
-    
+
     teams.forEach(items => {
-        msg += `Team Name: ** ${items.team.team_name} ** | Captain: ${items.team.captain} | Player 1: ${items.team.player1} | Player 2: ${items.team.player2} | Player 3: ${items.team.player3} \n\n`
+        msg += `Team Name: ** ${items.team.team_name} ** | Captain: ${items.team.captain} \n\n`
     });
     embed.setDescription(msg)
         .setFooter(`${teams.length} Teams * ${client.footer}`)

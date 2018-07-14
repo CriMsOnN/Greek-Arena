@@ -9,13 +9,13 @@ exports.run = async(client, message, args) => {
         .setTitle(`${message.guild.name} - Commands Handler`);
 
 
-    glob.sync('./commands/**/*.js').forEach((file) => {
+    glob.sync(`./commands/${args[0]}/**/*.js`).forEach((file) => {
         require(path.resolve(file));
     })
 
-    let cmd = client.commands.get(args[0])
+    let cmd = client.commands.get(args[1])
     cmd.conf.enabled = true;
-    embed.setDescription(`Command **${args[0]}** enabled!`);
+    embed.setDescription(`Command **${args[1]}** enabled!`);
     embed.setFooter(client.footer);
     message.channel.send(embed);
 }

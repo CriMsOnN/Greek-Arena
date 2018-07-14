@@ -1,35 +1,24 @@
 const Discord = require('discord.js');
 
 exports.run = async ( client, message, args) => {
-    if (message.mentions.members.first()) {
-        if(message.member.user.id == message.mentions.members.first().id) {
-            message.channel.send(new Discord.RichEmbed()
-                .setColor(client.color)
-                .setTitle(`${message.guild.name} - Unmute`)
-                .setDescription('You cant unmute yourself').then(m => {
-                    m.delete(5000)
-                })
-            )
-        } else {
-            message.channel.overwritePermissions(message.mentions.members.first(), {
-                SEND_MESSAGES: true
-            }).then((channel) => {
-                message.channel.send(new Discord.RichEmbed()
-                    .setColor(client.color)
-                    .setTitle(`${message.guild.name} - Unmute`)
-                    .setDescription(`Successfully unmuted: **${message.mentions.members.first().user.username}**`)
-                )
+    const logs = message.guild.channels.find('name', 'mod-logs');
+    let toMute = message.mentions.members.first() || message.guild.members.get(args[0]);
+    if(!toMute) return message.channel.send("You did not specify a user mention or ID!");
+    if(toMute.highestRole.position >= message.member.highestRole.position) return message.reply("You can not unmute a member that is equal to or higher than yourself!");
 
-                if(!message.mentions.members.first().user.bot) {
-                    message.mentions.members.first().send(new Discord.RichEmbed() 
-                        .setColor(client.color)
-                        .setTitle(`${message.guild.name} - Unmute`)
-                        .setDescription(`You got unmuted from **${message.guild.name}**\nUnmuted By **${message.member.user.tag}**`)
-                    )
-                }
-            })
-        }
-    }
+    let mutedRole = message.guild.roles.find(mR => mR.name === "Muted");
+
+    if(!mutedRole || !toMute.roles.has(mutedRole.id)) return message.reply("This user is not muted!");
+
+    await toMute.removeRole(mutedRole);
+
+    
+    const embed = new Discord.RichEmbed()
+        .setTitle(`${message.guild.name} - LOGS`)
+        .setColor(client.color)
+        .setDescription(`**${toMute}** unmuted by **${message.author.username}**`)
+        .setFooter(client.footer);
+    logs.send(embed);
 }
 
 exports.conf = {
