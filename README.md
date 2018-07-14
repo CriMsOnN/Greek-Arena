@@ -34,8 +34,10 @@ Welcome to GreekArenaBot! GreekArenaBot was designed to bring more activity to y
 - [x] Scrim Commands
 - [x] Second bot to watch everything on the server
 - [x] Logs for everything that happens
-- [ ] Start scrims with command
-- [ ] Stop scrims with command
+- [x] Start scrims with command
+- [x] Stop scrims with command
+- [x] Detect Memory Leak
+- [x] Force start scrims
 - [ ] Delete specific team from list
 - [ ] Auto update
 

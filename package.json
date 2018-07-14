@@ -1,6 +1,6 @@
 {
   "name": "discordbot-v0.2",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "better-console": "^1.0.1",
     "bindings": "^1.3.0",
     "chalk": "^2.4.1",
     "dblapi.js": "^2.1.0",
@@ -19,9 +20,9 @@
     "growl": "^1.10.2",
     "hastebin-gen": "^1.3.1",
     "minimatch": "^3.0.4",
-    "moment": "^2.22.2",
-    "moment-format": "^1.2.8",
     "ms": "^2.1.1",
+    "node-memwatch": "^1.0.1",
+    "nodemailer": "^4.6.7",
     "parse-ms": "^2.0.0",
     "string-similarity": "^1.2.0"
   }

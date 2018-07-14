@@ -1,9 +1,10 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const fs = require('fs');
-
+const memwatch = require('node-memwatch');
 const Enmap = require('enmap');
 const EnmapSQLite = require('enmap-sqlite');
+const nodemailer = require('nodemailer');
 client.commands = new Enmap();
 client.aliases = new Enmap();
 client.config = require('./config.json');
@@ -19,6 +20,12 @@ client.footer = 'PUBG Exp. Greece';
 client.logger = require('./utils/Logger.js');
 client.tools = require('./utils/functions.js');
 
+memwatch.on("leak", info => {
+    client.logger.log('Possible Memory Leak detected =>', info);
+    client.logger.log(`Leak Detected\n Reason: ${info.reason}`);
+
+})
+
 client.db = new Enmap({
     provider: new EnmapSQLite({
         name: 'database'
@@ -26,14 +33,17 @@ client.db = new Enmap({
 });
 
 client.db.defer.then(() => {
+    console.log("\n")
     client.logger.log(`${client.db.size} Entries Loaded`);
 });
 
 client.on('ready', async () => {
+    client.startTime = Date.now();
     client.user.setActivity('Scrims');
     client.user.setStatus("online");
     client.logger.log(`** Bot is up and running **`);
     client.user.setUsername('GreekArenaBot');
+    
 });
 
 fs.readdir("./commands/Admin", (err, files) => {
@@ -146,6 +156,9 @@ client.reload = function (directory, command) {
         }
     })
 }
+
+
+
 
 client.elevation = function (message) {
     let permlvl = 0

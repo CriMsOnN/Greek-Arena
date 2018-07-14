@@ -1,7 +1,6 @@
 @echo off
-color 0A
 for /f "delims=" %%a in (text.txt) DO (
 	ECHO %%a
 )
-node index.js
+nodemon index.js
 pause
