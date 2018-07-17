@@ -162,10 +162,12 @@ client.reload = function (directory, command) {
 
 client.elevation = function (message) {
     let permlvl = 0
-    let moderator_role = message.guild.roles.find("name", "Moderator")
+    let moderator_role = message.guild.roles.find("name", "MODERATORS")
     if (moderator_role && message.member.roles.has(moderator_role.id)) permlvl = 2
-    let admin_role = message.guild.roles.find("name", "Administrator")
+    let admin_role = message.guild.roles.find("name", "HEAD ADMIN")
     if (admin_role && message.member.roles.has(admin_role.id)) permlvl = 3
+    let developer_role = message.guild.roles.find("name", "DEVELOPERS")
+    if(developer_role && message.member.roles.has(developer_role.id)) permlvl = 4
     if (message.author.id === client.config.ownerID) permlvl = 4
     return permlvl;
 }
