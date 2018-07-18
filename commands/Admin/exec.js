@@ -17,6 +17,6 @@ exports.conf = {
 
 exports.help = {
     name: "exec",
-    description: "Clear messages",
+    description: "Exec a prompt command",
     usage: "exec"
 }
