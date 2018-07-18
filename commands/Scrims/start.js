@@ -1,26 +1,31 @@
 const Discord = require('discord.js');
+const SQLite = require("better-sqlite3");
+const sql = new SQLite('./sqlite/database.sqlite');
+
 
 exports.run = (client, message, args) => {
     const modlog = message.guild.channels.find('name', 'mod-logs');
     const scrims = message.guild.channels.find('name', 'scrims-signup');
     const general = message.guild.channels.find('name', 'general');
-    const admin_channel = message.guild.channels.find('name', 'admin_channel');
-    
+    const admin_channel = message.guild.channels.find('name', 'admins_channel');
+    let connection;
     if(message.channel.name != admin_channel.name) return;
     if(client.scrims === 'Closed') {
-        let scrim_details = client.db.get('scrimDetails');
         client.scrims = 'Opened';
-        general.send(`@everyone Scrims are open. Captains go to #scrims-signup and type !add Team_Name to enter the scrims`);
-        
-        let data = {
-            details: {
-                name: args[0],
-                password: args[1]
-            }
+        general.send(`@everyone Scrims are open. Captains go to #scrims-signup and type !add team name to enter the scrims`);
+    }
+
+    getDetails = sql.prepare("SELECT * FROM details");
+    insertDetails = sql.prepare("INSERT INTO details (name, password) VALUES (@name, @password);");
+
+    let details = getDetails.all();
+    if(!details || details.length === 0) {
+        connection = {
+            name: args[0],
+            password: args[1]
         }
-        
-        if(client.db.has(`scrimDetails`)) client.db.push(`scrimDetails`, data);
-        else client.db.set(`scrimDetails`, [data])
+        insertDetails.run(connection);
+        message.reply(`Your details has been **accepted**`);
     }
 }
 

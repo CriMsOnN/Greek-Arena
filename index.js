@@ -3,8 +3,8 @@ const client = new Discord.Client();
 const fs = require('fs');
 const memwatch = require('node-memwatch');
 const Enmap = require('enmap');
-const EnmapSQLite = require('enmap-sqlite');
-const nodemailer = require('nodemailer');
+const SQLite = require("better-sqlite3");
+const sql = new SQLite('./sqlite/database.sqlite');
 client.commands = new Enmap();
 client.aliases = new Enmap();
 client.config = require('./config.json');
@@ -26,23 +26,24 @@ memwatch.on("leak", info => {
 
 })
 
-client.db = new Enmap({
-    provider: new EnmapSQLite({
-        name: 'database'
-    })
-});
-
-client.db.defer.then(() => {
-    console.log("\n")
-    client.logger.log(`${client.db.size} Entries Loaded`);
-});
-
 client.on('ready', async () => {
     client.startTime = Date.now();
     client.user.setActivity('Scrims');
     client.user.setStatus("online");
     client.logger.log(`** Bot is up and running **`);
     client.user.setUsername('GreekArenaBot');
+    const table = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'database';").get();
+    if(!table['count(*)']) {
+        sql.prepare("CREATE TABLE database (teamname TEXT, captain TEXT, captain_id TEXT);").run();
+        sql.pragma("synchronous = 1");
+        sql.pragma("journal_mode = wal");
+    }
+    const table2 = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'details';").get();
+    if(!table2['count(*)']) {
+        sql.prepare("CREATE TABLE details (name TEXT, password TEXT);").run();
+        sql.pragma("synchronous = 1");
+        sql.pragma("journal_mode = wal");
+    }
     
 });
 

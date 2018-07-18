@@ -24,6 +24,7 @@
     "node-memwatch": "^1.0.1",
     "nodemailer": "^4.6.7",
     "parse-ms": "^2.0.0",
+    "sqlite": "^2.9.2",
     "string-similarity": "^1.2.0"
   }
 }

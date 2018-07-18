@@ -81,5 +81,6 @@ typings/
 
 
 # End of https://www.gitignore.io/api/node
-data/enmap.sqlite-shm
-data/enmap.sqlite-wal
+sqlite/database.sqlite
+sqlite/database.sqlite-shm
+sqlite/database.sqlite-wal
