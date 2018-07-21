@@ -10,6 +10,8 @@ exports.run = async (client, message, args) => {
     if(!member) return message.reply('You have to mention a member');
     if(!message.member.voiceChannel) return message.reply('You have to be on a voice channel');
     if(!member.voiceChannel) return message.reply(`The member you wanna move needs to be on a voice channel`);
+	if(member === message.author.username) return message.reply('You can not move your self');
+	if(message.member.voiceChannel === member.voiceChannel) return message.reply('You are already on the same voice channel');
 
     member.setVoiceChannel(message.member.voiceChannel).then(() => {
         const embed = new Discord.RichEmbed()
