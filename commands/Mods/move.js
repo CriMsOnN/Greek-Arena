@@ -5,9 +5,9 @@ exports.run = async (client, message, args) => {
     const member = message.mentions.members.first();
     const channel = message.guild.channels.find('name', 'mod-logs');
     const messagechannel = message.guild.channels.find('name', 'moves');
-    if(message.channel.name != messagechannel.name) return;
     const vc = args.slice(1).join(" ");
     const chan = client.channels.find("name", vc);
+    if(message.channel.name != messagechannel.name) return;
     if(!member) return message.reply('You have to mention a member');
     if(!vc) return message.reply('You have to enter the channel name');
     if(!message.member.voiceChannel) return message.reply('You have to be on a voice channel');
