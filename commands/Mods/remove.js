@@ -10,7 +10,7 @@ exports.run = async (client, message, args) => {
     if(!member) return message.reply('You have to mention a member');
     if(member.id === message.author.id) return message.reply('You can not move your self');
     if(!message.member.voiceChannel) return message.reply('You have to be on a voice channel');
-    if(!member.voiceChannel) return message.reply(`The member you wanna move needs to be on a voice channel`);
+    if(!member.voiceChannel) return message.reply(`The member you wanna remove needs to be on the same voice channel with you`);
     if(member.roles.some(r=>["Moderators","HEAD ADMIN", "VIOLOGIKOS"].includes(r.name))) {
         return message.reply('You cant move Moderators or Head Admins');
     }
