@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 
 exports.run = async (client, message, args) => {
     const general = message.guild.channels.find('name', 'general');
-    const admin_channel = message.guild.channels.find('name', 'admin_channel');
+    const admin_channel = message.guild.channels.find('name', 'admins_channel');
     
     if(message.channel.name != admin_channel.name) return;
     

@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 
 exports.run = async (client, message, args) => {
-    let channel = message.guild.channels.find('name', 'admin_channel');
+    let channel = message.guild.channels.find('name', 'admins_channel');
     var now = Date.now();
 		var msec = now - client.startTime;
 		client.logger.log("Uptime is " + msec + " milliseconds");
