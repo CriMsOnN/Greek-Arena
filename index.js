@@ -89,11 +89,6 @@ client.on('message', message => {
         message.reply('We are performing scheduled maintenance. We should be back online shortly.\nIn oder to provide you with a better experience, we periodically perfom maintenance on the bot and server');
         return;
     }
-    if(message.channel.name === message.guild.channels.find('name', 'scrims-signup').name) {
-        if(!message.content.startsWith(client.prefix)) {
-            message.delete(1000);
-        }
-    }
     if (!message.content.startsWith(client.prefix)) return;
     let command = message.content.split(" ")[0].slice(client.config.prefix.length);
     let args = message.content.split(" ").slice(1);
@@ -163,7 +158,7 @@ client.reload = function (directory, command) {
 
 client.elevation = function (message) {
     let permlvl = 0
-    let moderator_role = message.guild.roles.find("name", "MODERATORS")
+    let moderator_role = message.guild.roles.find("name", "Moderators")
     if (moderator_role && message.member.roles.has(moderator_role.id)) permlvl = 2
     let admin_role = message.guild.roles.find("name", "HEAD ADMIN")
     if (admin_role && message.member.roles.has(admin_role.id)) permlvl = 3
