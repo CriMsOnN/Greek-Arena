@@ -19,7 +19,7 @@ exports.run = async (client, message, args) => {
             const embed = new Discord.RichEmbed()
                 .setColor(client.color)
                 .setTitle(`${message.guild.name} - LOGS`)
-                .setDescription(`**${member}** moved to **${message.member.voiceChannel}** from **${message.author.username}**`)
+                .setDescription(`**${member}** removed **${message.member.voiceChannel}** from **${message.author.username}**`)
                 .setFooter(client.footer);
             channel.send(embed);
         })
