@@ -29,21 +29,7 @@ client.on('ready', async () => {
 });
 
 client.on('message', message => {
-    if(!message.content.startsWith(client.prefix)) return;
-    let command = message.content.split(" ")[0].slice(client.prefix.length);
-    let args = message.content.split(" ").slice(1);
-    if(message.content.startsWith("!move")) {
-        console.log(message.member.voiceChannelID);
-        //if(!message.member.voiceChannel) return message.channel.send('Please connect to a voice channel.');
-        //if(message.mentions.users.first().voiceChannel) return message.channel.send('Sorry, this player is already connected to a voice channel');
-       // message.member.setVoiceChannel()
-        let member = message.mentions.users.first().voiceChannel;
-        console.log(member);
-        //message.member.setVoiceChannel(member);
 
-
-
-    }
 })
 
 
