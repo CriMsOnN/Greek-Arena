@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 
 exports.run = async (client, message, args) => {
-    const member = message.mentions.members.first() || message.guild.members.get(args[0]);
+    const member = message.mentions.members.first()
     const channel = message.guild.channels.find('name', 'mod-logs');
     const messagechannel = message.guild.channels.find('name', 'moves');
     if(!member) return message.reply('You have to mention a member');
