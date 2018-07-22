@@ -4,8 +4,9 @@ exports.run = async (client, message, args) => {
     const member = message.mentions.members.first() || message.guild.members.get(args[0]);
     const channel = message.guild.channels.find('name', 'mod-logs');
     const messagechannel = message.guild.channels.find('name', 'moves');
-    const vc = args.slice(1).join(" ");
-    const chan = client.channels.find("name", vc);
+    if(member.roles.some(r=>["Moderators","HEAD ADMIN", "VIOLOGIKOS"].includes(r.name))) {
+        return message.reply('You cant move Moderators or Head Admins');
+    }
     if(message.channel.name != messagechannel.name) return;
     if(!member) return message.reply('You have to mention a member');
     if(!message.member.voiceChannel) return message.reply('You have to be on a voice channel');
