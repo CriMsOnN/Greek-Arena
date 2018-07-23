@@ -9,12 +9,12 @@ exports.run = async ( client, message, args) => {
     if (message.mentions.users.size < 1) return message.reply(`You did not specify the member you want to ban`);
     if(!user.bot) {
         message.guild.member(member).kick();
-        const embed2 = new Discord.RichEmbed()
+        const embed = new Discord.RichEmbed()
             .setColor(client.color)
             .setTitle(`${message.guild.name} - LOGS`)
             .setDescription(`**${user.username}** kicked from **${message.author.username}** with reason **${reason}**`)
             .setFooter(client.footer);
-        logs.send(embed2);
+        logs.send(embed);
     }
 }
 

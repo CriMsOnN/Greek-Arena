@@ -124,13 +124,13 @@ client.on('message', message => {
 client.on('guildMemberRemove', async (member) => {
     member.guild.channels.get(client.config.serverStatsChannels.totaluserschannelID).setName(`Total Users: ${member.guild.memberCount}`)
     let humans = member.guild.members.filter(m => !m.user.bot).size
-    member.guild.channels.get(client.config.serverStatsChannels.membercountchannelID).setName(`Member Count: ${humans}`)
+    member.guild.channels.get(client.config.serverStatsChannels.membercountchannelID).setName(`Online Users: ${humans}`)
 })
 
 client.on('guildMemberAdd', (member) => {
     member.guild.channels.get(client.config.serverStatsChannels.totaluserschannelID).setName(`Total Users: ${member.guild.memberCount}`);
     let humans = member.guild.members.filter(m => !m.user.bot).size
-    member.guild.channels.get(client.config.serverStatsChannels.membercountchannelID).setName(`Member Count: ${humans}`);
+    member.guild.channels.get(client.config.serverStatsChannels.membercountchannelID).setName(`Online Users: ${humans}`);
 })
 client.reload = function (directory, command) {
     return new Promise((resolve, reject) => {

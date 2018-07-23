@@ -2,7 +2,6 @@ const Discord = require('discord.js');
 const SQLite = require("better-sqlite3");
 const sql = new SQLite('./sqlite/database.sqlite');
 
-
 exports.run = async (client, message, args) => {
     const modlog = message.guild.channels.find('name', 'mod-logs');
     const signups = message.guild.channels.find('name', 'scrims-signup');

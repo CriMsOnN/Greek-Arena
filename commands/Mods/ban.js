@@ -24,7 +24,6 @@ exports.run = async ( client, message, args) => {
             .setFooter(client.footer);
         logs.send(embed);
     }
-    
 }
 
 exports.conf = {
