@@ -8,6 +8,8 @@ exports.run = async(client, message, args) => {
     totalSeconds %= 3600;
     let minutes = Math.floor(totalSeconds / 60);
     let seconds = totalSeconds % 60;
+    let created = message.author.createdAt;
+    console.log(created);
     const embed = new Discord.RichEmbed()
         .setColor(client.color)
         .setAuthor(client.user.username, client.user.avatarURL)
