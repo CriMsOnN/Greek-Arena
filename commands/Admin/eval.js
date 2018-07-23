@@ -11,9 +11,8 @@ exports.run = async (client, message, args) => {
       }
       let argresult = args.join(' ');
       if (message.author.id !==  '120591093950709760') {
-        // Check if user have Permissions to use the command
-       message.channel.send('You Don\'t Have Permissions To Use This Command !'); // Send Message to the channel if they dont have permissions
-       return; // Returns the code so the rest doesn't run
+       message.channel.send('You Don\'t Have Permissions To Use This Command !');
+       return; 
      }
      if (!argresult) {
        return message.channel.send("Please Specify a Code To Run!");
