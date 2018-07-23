@@ -15,15 +15,14 @@ exports.run = async ( client, message, args) => {
     else {
         reason = `No reason provided by ${banner}`;
     }
-
     if(!user.bot) {
         message.guild.member(member).ban(reason);
-        const embed2 = new Discord.RichEmbed()
+        const embed = new Discord.RichEmbed()
             .setColor(client.color)
             .setTitle(`${message.guild.name} - LOGS`)
             .setDescription(`**${member}** banned by **${banner}** with reason **${reason}**`)
             .setFooter(client.footer);
-        logs.send(embed2);
+        logs.send(embed);
     }
     
 }
