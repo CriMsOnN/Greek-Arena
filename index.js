@@ -119,13 +119,6 @@ client.on('message', message => {
         }
     }
 })
-client.on("Presence", user => {
-    if(user.status == 'offline') {
-        let humans = user.guild.members.filter(m => !m.user.bot).size
-        user.guild.channels.get(client.config.serverStatsChannels.membercountchannelID).setName(`Online Users: ${humans}`)
-
-    }
-})
 
 client.on('guildMemberRemove', async (member) => {
     member.guild.channels.get(client.config.serverStatsChannels.totaluserschannelID).setName(`Total Users: ${member.guild.memberCount}`)

@@ -1,16 +1,7 @@
-/*
-Logger class for easy and aesthetically pleasing console logging 
-*/
 const chalk = require("chalk");
 const functions = require("./functions.js");
 
 exports.log = (content, type = "log") =>   {
-  /*const dateObj = new Date();
-  const month = dateObj.getUTCMonth() + 1;
-  const day = dateObj.getUTCDate();
-  const year = dateObj.getUTCFullYear();
-
-  const timestamps = `[${year}/${month}/${day}]`;*/
 
     var date = new Date();
     var text = functions.getFormattedDate(date);
