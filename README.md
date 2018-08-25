@@ -38,7 +38,7 @@ Welcome to GreekArenaBot! GreekArenaBot was designed to bring more activity to y
 - [x] Stop scrims with command
 - [x] Detect Memory Leak
 - [x] Force start scrims
-- [ ] Delete specific team from list
+- [x] Delete specific team from list
 - [ ] Auto update
 
 
