@@ -1,10 +1,7 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const fs = require('fs');
-const memwatch = require('node-memwatch');
 const Enmap = require('enmap');
-const SQLite = require("better-sqlite3");
-const sql = new SQLite('./sqlite/database.sqlite');
 client.commands = new Enmap();
 client.aliases = new Enmap();
 client.config = require('./config.json');
@@ -20,31 +17,19 @@ client.footer = 'PUBG Exp. Greece';
 client.logger = require('./utils/Logger.js');
 client.tools = require('./utils/functions.js');
 
-memwatch.on("leak", info => {
-    client.logger.log('Possible Memory Leak detected =>', info);
-    client.logger.log(`Leak Detected\n Reason: ${info.reason}`);
-
-})
 
 client.on('ready', async () => {
     client.startTime = Date.now();
+	let interval = setInterval(function() {
+		let online = client.users.filter(m => m.presence.status === 'online').size
+		let online2 = client.users.filter(m => m.presence.status === 'dnd').size
+		let online3 = client.users.filter(m => m.presence.status === 'idle').size
+		let totalonline = online + online2 + online3
+		client.channels.get('468777684605075486').setName(`Online Users: ${totalonline}`)
+	}, 1 * 1000)
     client.user.setActivity('Scrims');
     client.user.setStatus("online");
     client.logger.log(`** Bot is up and running **`);
-    client.user.setUsername('GreekArenaBot');
-    const table = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'database';").get();
-    if(!table['count(*)']) {
-        sql.prepare("CREATE TABLE database (teamname TEXT, captain TEXT, captain_id TEXT);").run();
-        sql.pragma("synchronous = 1");
-        sql.pragma("journal_mode = wal");
-    }
-    const table2 = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'details';").get();
-    if(!table2['count(*)']) {
-        sql.prepare("CREATE TABLE details (name TEXT, password TEXT);").run();
-        sql.pragma("synchronous = 1");
-        sql.pragma("journal_mode = wal");
-    }
-    
 });
 
 fs.readdir("./commands/Admin", (err, files) => {
@@ -85,7 +70,7 @@ fs.readdir("./commands/Scrims", (err, files) => {
 client.on('message', message => {
     if (!message.member) return;
     if (message.author.bot) return;
-    if(client.maintenance === true && message.content.startsWith(client.prefix) && message.channel.name != message.guild.channels.find('name', 'admin_channel').name) {
+    if(client.maintenance === true && message.content.startsWith(client.prefix) && message.channel.name != message.guild.channels.find('name', 'admins_channel').name) {
         message.reply('We are performing scheduled maintenance. We should be back online shortly.\nIn oder to provide you with a better experience, we periodically perfom maintenance on the bot and server');
         return;
     }
@@ -122,14 +107,10 @@ client.on('message', message => {
 
 client.on('guildMemberRemove', async (member) => {
     member.guild.channels.get(client.config.serverStatsChannels.totaluserschannelID).setName(`Total Users: ${member.guild.memberCount}`)
-    let humans = member.guild.members.filter(m => !m.user.bot).size
-    member.guild.channels.get(client.config.serverStatsChannels.membercountchannelID).setName(`Online Users: ${humans}`)
 })
 
 client.on('guildMemberAdd', (member) => {
     member.guild.channels.get(client.config.serverStatsChannels.totaluserschannelID).setName(`Total Users: ${member.guild.memberCount}`);
-    let humans = member.guild.members.filter(m => !m.user.bot).size
-    member.guild.channels.get(client.config.serverStatsChannels.membercountchannelID).setName(`Online Users: ${humans}`);
 })
 client.reload = function (directory, command) {
     return new Promise((resolve, reject) => {
@@ -157,14 +138,25 @@ client.reload = function (directory, command) {
 
 client.elevation = function (message) {
     let permlvl = 0
-    let moderator_role = message.guild.roles.find("name", "Moderators")
-    if (moderator_role && message.member.roles.has(moderator_role.id)) permlvl = 2
-    let admin_role = message.guild.roles.find("name", "HEAD ADMIN")
-    if (admin_role && message.member.roles.has(admin_role.id)) permlvl = 3
-    let developer_role = message.guild.roles.find("name", "DEVELOPERS")
-    if(developer_role && message.member.roles.has(developer_role.id)) permlvl = 4
+    let moderator_role = message.guild.roles.find("name", "Head Community Manager")
+    if (moderator_role && message.member.roles.has(moderator_role.id)) permlvl = 4
+	let communitymanager = message.guild.roles.find("name", "Community Manager")
+	if (communitymanager && message.member.roles.has(communitymanager.id)) permlvl = 4
+    let admin_role = message.guild.roles.find("name", "PGC")
+    if (admin_role && message.member.roles.has(admin_role.id)) permlvl = 4
     if (message.author.id === client.config.ownerID) permlvl = 4
     return permlvl;
 }
 
+client.on('reconnecting', () => {
+    console.log('I am reconnecting now!');
+}).on('resume', () => {
+    console.log('Reconnected!');
+}).on('disconnect', () => {
+    console.log('Disconnected from the server!');
+});
+process.on('unhandledRejection', err => {
+    console.log('Uncaught Promise Error! \n' + err.stack);
+})
+client.on('error', console.error);
 client.login(client.config.botToken);

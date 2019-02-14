@@ -4,6 +4,7 @@ exports.run = async (client, message, args) => {
     let channel = message.guild.channels.find('name', 'general');
     if(client.maintenance === false) {
        client.maintenance = true;
+	   message.reply("Maintenance is **on**");
        return;
     }
     else {
